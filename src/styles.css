@@ -25,6 +25,7 @@ button {
   padding: 10px 14px;
   font-weight: 700;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 button.primary {
@@ -289,6 +290,13 @@ input[type="text"] {
   margin: 0;
 }
 
+.icon-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
 .review {
   padding: 40px 40px 120px;
 }
@@ -517,6 +525,44 @@ input[type="text"] {
     left: 0;
     right: 0;
     padding: 12px 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .labeling-header {
+    grid-template-columns: 1fr auto auto;
+  }
+
+  .labeling-header h2,
+  .labeling-header p {
+    grid-column: auto;
+  }
+
+  .labeling-header h2 {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .labeling-header p {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .labeling-header .icon-action {
+    grid-row: 1 / span 2;
+    width: 44px;
+    min-width: 44px;
+    padding: 0;
+    font-size: 20px;
+  }
+
+  .labeling-header .action-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
   }
 }
 
