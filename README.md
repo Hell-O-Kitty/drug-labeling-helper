@@ -24,6 +24,24 @@ CSV 파일을 불러와 행 단위로 데이터를 확인하고 라벨링 결과
 8. 행 내용을 확인하고 하단의 라벨 버튼을 선택합니다.
 9. 작업이 끝나면 `결과 CSV 다운로드`로 라벨링된 CSV 파일을 저장합니다.
 
+## GitHub Pages로 배포하기
+
+이 프로젝트는 별도 빌드가 필요 없는 정적 웹앱입니다. GitHub Pages를 켜면 휴대폰에서도 URL로 접속할 수 있습니다.
+
+1. 변경사항을 `main` 브랜치에 push합니다.
+2. GitHub 저장소에서 `Settings` > `Pages`로 이동합니다.
+3. `Build and deployment`의 `Source`를 `GitHub Actions`로 선택합니다.
+4. `Actions` 탭에서 `Deploy GitHub Pages` 워크플로가 성공할 때까지 기다립니다.
+5. 배포가 끝나면 `Settings` > `Pages`에 표시되는 URL로 접속합니다.
+
+배포 URL 예시:
+
+```text
+https://사용자명.github.io/저장소명/
+```
+
+휴대폰에서는 위 URL을 브라우저에서 열고 CSV 파일을 선택하면 됩니다.
+
 ## 주요 기능
 
 - CSV 파일 업로드

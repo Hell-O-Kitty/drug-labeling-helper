@@ -55,8 +55,6 @@ const urlPreviewText = document.getElementById("urlPreviewText");
 const urlPreviewLink = document.getElementById("urlPreviewLink");
 const urlPreviewImage = document.getElementById("urlPreviewImage");
 const urlPreviewFrame = document.getElementById("urlPreviewFrame");
-const prevButton = document.getElementById("prevButton");
-const nextButton = document.getElementById("nextButton");
 const downloadButton = document.getElementById("downloadButton");
 const backToSetupButton = document.getElementById("backToSetupButton");
 
@@ -819,18 +817,6 @@ clearColumnsButton.addEventListener("click", () => {
 });
 
 startButton.addEventListener("click", startLabeling);
-
-prevButton.addEventListener("click", () => {
-  state.currentIndex = Math.max(0, state.currentIndex - 1);
-  saveDraft();
-  renderLabelingView();
-});
-
-nextButton.addEventListener("click", () => {
-  state.currentIndex = Math.min(state.rows.length - 1, state.currentIndex + 1);
-  saveDraft();
-  renderLabelingView();
-});
 
 async function downloadResultCsv() {
   const blob = new Blob([buildCsv()], { type: "text/csv;charset=utf-8" });

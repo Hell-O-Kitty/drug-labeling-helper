@@ -10,6 +10,7 @@
 
 body {
   margin: 0;
+  overflow-x: hidden;
 }
 
 button,
@@ -271,8 +272,11 @@ input[type="text"] {
 
 .labeling-header {
   grid-column: 1 / -1;
+  position: sticky;
+  top: 0;
+  z-index: 20;
   display: grid;
-  grid-template-columns: auto auto 1fr auto auto;
+  grid-template-columns: auto 1fr auto auto;
   align-items: center;
   gap: 16px;
   border-bottom: 1px solid #d0d7de;
@@ -283,11 +287,6 @@ input[type="text"] {
 .labeling-header h2,
 .labeling-header p {
   margin: 0;
-}
-
-.toolbar {
-  display: flex;
-  gap: 8px;
 }
 
 .review {
@@ -453,6 +452,7 @@ input[type="text"] {
 .url-preview-image {
   display: block;
   height: auto;
+  max-width: 100%;
   max-height: none;
   object-fit: contain;
 }
@@ -493,8 +493,17 @@ input[type="text"] {
   }
 
   .labeling-header {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     padding: 16px;
+  }
+
+  .labeling-header h2,
+  .labeling-header p {
+    grid-column: 1 / -1;
+  }
+
+  .labeling-header > button {
+    width: 100%;
   }
 
   .url-preview {
@@ -508,5 +517,96 @@ input[type="text"] {
     left: 0;
     right: 0;
     padding: 12px 16px;
+  }
+}
+
+@media (max-width: 560px) {
+  button,
+  select,
+  input[type="text"] {
+    min-height: 44px;
+  }
+
+  .setup {
+    width: min(100% - 24px, 1120px);
+    padding: 20px 0;
+  }
+
+  .page-header {
+    margin-bottom: 18px;
+  }
+
+  .page-header h1 {
+    font-size: 28px;
+  }
+
+  .restore-banner,
+  .panel {
+    padding: 14px;
+  }
+
+  .step-indicator {
+    justify-content: center;
+  }
+
+  .chip-list {
+    max-height: 180px;
+  }
+
+  .column-chip,
+  .url-tab {
+    padding: 9px 12px;
+  }
+
+  .labeling-header {
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .labeling-header h2 {
+    font-size: 18px;
+  }
+
+  .review {
+    padding: 20px 12px 140px;
+  }
+
+  .row-fields {
+    gap: 10px;
+    margin: 16px 0;
+  }
+
+  .field {
+    padding: 14px;
+  }
+
+  .field p,
+  .url-text {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .url-preview {
+    padding: 14px 12px 140px;
+  }
+
+  .url-preview iframe {
+    min-height: 420px;
+  }
+
+  .url-preview-image {
+    max-height: none;
+  }
+
+  .label-buttons {
+    justify-content: stretch;
+    gap: 8px;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .label-buttons button {
+    flex: 1 1 calc(33.333% - 8px);
+    min-width: 0;
+    min-height: 48px;
   }
 }
