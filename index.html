@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Labeling Helper</title>
+    <link rel="stylesheet" href="src/styles.css">
+  </head>
+  <body>
+    <main class="app">
+      <section id="setupView" class="setup">
+        <header class="page-header">
+          <h1>Labeling Helper</h1>
+          <p>CSV 파일을 불러와 라벨링할 칼럼과 결과 칼럼을 설정하세요.</p>
+          <button id="returnToLabelingButton" type="button" class="secondary hidden">라벨링으로 돌아가기</button>
+        </header>
+
+        <section id="restoreBanner" class="restore-banner hidden">
+          <div>
+            <strong>직전 작업이 있습니다.</strong>
+            <p id="restoreSummary">직전 진행 상황을 불러올 수 있습니다.</p>
+          </div>
+          <div class="restore-actions">
+            <button id="restoreDraftButton" type="button" class="primary">직전 데이터 불러오기</button>
+            <button id="discardDraftButton" type="button" class="secondary">삭제</button>
+          </div>
+        </section>
+
+        <div class="step-indicator" aria-label="설정 단계">
+          <span class="step-dot is-active" data-step-indicator="1">1</span>
+          <span class="step-dot" data-step-indicator="2">2</span>
+          <span class="step-dot" data-step-indicator="3">3</span>
+        </div>
+
+        <div class="setup-steps">
+          <section class="panel setup-step" data-step="1">
+            <h2>1. CSV 불러오기</h2>
+            <label class="file-drop" for="csvFile">
+              <span id="fileName">CSV 파일 선택</span>
+              <input id="csvFile" type="file" accept=".csv,text/csv">
+            </label>
+            <p id="fileSummary" class="hint">첫 번째 행은 헤더로 사용됩니다.</p>
+            <button id="toColumnStepButton" type="button" class="primary step-next">다음 단계</button>
+          </section>
+
+          <section class="panel setup-step hidden" data-step="2">
+            <h2>2. 칼럼 설정</h2>
+            <label>확인할 칼럼</label>
+            <div class="column-actions">
+              <button id="selectAllColumnsButton" type="button" class="text-button">전체 선택</button>
+              <button id="clearColumnsButton" type="button" class="text-button">전체 해제</button>
+            </div>
+            <div id="sourceColumns" class="chip-list" aria-label="확인할 칼럼"></div>
+            <p class="hint">칼럼 이름을 클릭하면 선택하거나 해제할 수 있습니다.</p>
+
+            <label for="resultColumn">결과 기록 칼럼</label>
+            <select id="resultColumn"></select>
+            <label>다시 라벨링할 결과값</label>
+            <div id="targetResultValues" class="chip-list" aria-label="다시 라벨링할 결과값"></div>
+            <p class="hint">선택한 값 하나에 해당하는 행만 라벨링 대상으로 불러옵니다. 빈칸은 결과가 없는 행입니다.</p>
+
+            <label class="checkbox-row">
+              <input id="createResultColumn" type="checkbox">
+              새 결과 칼럼 만들기
+            </label>
+            <p class="hint">체크하면 기존 칼럼 대신 새 칼럼을 CSV 마지막에 추가하고, 선택한 라벨 값을 그 칼럼에 기록합니다.</p>
+            <input id="newResultColumnName" class="hidden" type="text" value="label" aria-label="새 결과 칼럼 이름">
+            <div class="step-actions">
+              <button id="backToFileStepButton" type="button" class="secondary">이전 단계</button>
+              <button id="toLabelStepButton" type="button" class="primary">다음 단계</button>
+            </div>
+          </section>
+
+          <section class="panel setup-step hidden" data-step="3">
+            <h2>3. 라벨 설정</h2>
+            <div id="labelOptions" class="label-options"></div>
+            <button id="addLabelButton" type="button" class="secondary">라벨 추가</button>
+            <div class="step-actions">
+              <button id="backToColumnStepButton" type="button" class="secondary">이전 단계</button>
+              <button id="startButton" type="button" class="primary">라벨링 시작하기</button>
+            </div>
+          </section>
+        </div>
+
+        <p id="setupMessage" class="message"></p>
+      </section>
+
+      <section id="labelingView" class="labeling hidden">
+        <header class="labeling-header">
+          <h2>라벨링 설정</h2>
+          <p id="progressText">0 / 0</p>
+          <div class="toolbar">
+            <button id="prevButton" type="button" class="secondary">이전</button>
+            <button id="nextButton" type="button" class="secondary">다음</button>
+          </div>
+          <button id="downloadButton" type="button" class="primary">결과 CSV 다운로드</button>
+          <button id="backToSetupButton" type="button" class="secondary">설정으로 돌아가기</button>
+        </header>
+
+        <section class="review">
+          <header>
+            <p id="rowLabel" class="eyebrow">1행</p>
+          </header>
+          <div id="completionMessage" class="completion-message hidden">
+            <h1>라벨링이 완료되었습니다.</h1>
+            <p>선택한 기준에 해당하는 행을 모두 처리했습니다.</p>
+          </div>
+          <div id="rowFields" class="row-fields"></div>
+          <div id="labelButtons" class="label-buttons"></div>
+        </section>
+
+        <aside id="urlPreview" class="url-preview hidden">
+          <header>
+            <h2>URL 확인</h2>
+          </header>
+          <div id="urlTabs" class="url-tabs" aria-label="URL 목록"></div>
+          <p id="urlColumnName" class="url-column-name"></p>
+          <p id="urlPreviewText" class="url-text"></p>
+          <a id="urlPreviewLink" class="open-url-button" href="#" target="_blank" rel="noreferrer">새 탭에서 확인하기</a>
+          <img id="urlPreviewImage" class="url-preview-image hidden" alt="선택한 이미지 URL 미리보기">
+          <iframe id="urlPreviewFrame" title="선택한 URL 확인"></iframe>
+        </aside>
+      </section>
+    </main>
+
+    <script src="src/app.js"></script>
+  </body>
+</html>
